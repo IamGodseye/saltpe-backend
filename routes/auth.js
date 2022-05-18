@@ -1,5 +1,5 @@
 import express from "express";
-import { requireSignin } from "../middleware";
+
 const router = express.Router();
 import {
     register,
@@ -9,6 +9,6 @@ import {
 
 router.post("/register", register);
 router.post("/login", login);
-router.get("/logout", requireSignin, logout);
+router.get("/logout", logout);
 
 module.exports = router;

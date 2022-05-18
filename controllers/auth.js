@@ -46,7 +46,7 @@ export const login = async (req, res) => {
             //secure will only work in HTTPS
         });
 
-        return res.json({ ok: true, user: user, message: 'Login successful' });
+        return res.json({ ok: true, user: user, message: 'Login successful', user });
     } catch (error) {
         console.log(error);
         return res.json({ ok: false, message: error.message || 'Error...Try again....' })

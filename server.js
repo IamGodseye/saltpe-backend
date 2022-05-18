@@ -33,7 +33,8 @@ app.use(express.json({ limit: "5mb" }));
 // only dev middlewares
 const environment = process.env.NODE_ENV
 const isDev = environment === 'development'
-if (isDev) app.use(morgan("dev"));
+// if (isDev)
+app.use(morgan("dev"));
 
 app.use(cookieParser());
 //route

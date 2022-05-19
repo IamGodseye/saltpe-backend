@@ -33,20 +33,15 @@ export const login = async (req, res) => {
 
         if (!match) throw Error("Wrong Password!!!");
         //create JWT
-        //expried in 7 days
+        //expried in 1 days
         const token = jwt.sign({ _id: user._id }, process.env.JWT_SECRET, {
             expiresIn: "7d",
         });
         user.password = undefined;
-
+        console.log(token)
         //send token
-        res.cookie("token", token, {
-            httpOnly: true,
-            //secure: true,
-            //secure will only work in HTTPS
-        });
 
-        return res.json({ ok: true, user: user, message: 'Login successful', user });
+        res.json({ ok: true, message: 'Login successful', user, token });
     } catch (error) {
         console.log(error);
         return res.json({ ok: false, message: error.message || 'Error...Try again....' })
@@ -62,3 +57,28 @@ export const logout = async (req, res) => {
         return res.json({ ok: false, message: error.message || 'Error...Try again....' })
     }
 };
+
+export const profile = async (req, res) => {
+    try {
+        const userId = req.user._id
+        const user = await User.findById(userId);
+        console.log("User =>", user);
+        return res.json({ ok: true, user })
+    } catch (error) {
+        console.log(error);
+        return res.json({ ok: false, message: error.message || 'Error...Try again....' })
+    }
+}
+
+export const addAboutMe = async (req, res) => {
+    try {
+        const { aboutMe } = req.body;
+        const userId = req.user._id
+        await User.findOneAndUpdate({ _id: userId },
+            { aboutMe });
+        return res.json({ ok: true, message: 'Added About me' })
+    } catch (error) {
+        console.log(error);
+        return res.json({ ok: false, message: error.message || 'Error...Try again....' })
+    }
+}

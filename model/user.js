@@ -24,6 +24,10 @@ const userSchema = new Schema(
             default: ["User"],
             enum: ["User", "Admin"],
         },
+        aboutMe: {
+            type: String,
+            default: "",
+        },
     },
     { timestamps: true }
 );
